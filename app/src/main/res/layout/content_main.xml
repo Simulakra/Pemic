@@ -16,40 +16,84 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.8"
             android:background="@color/colorPrimaryDark">
 
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.3">
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toolbar Title"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toolbar Title"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toolbar Title"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+            </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:background="@color/colorWheat">
 
                 <android.support.design.widget.TabItem
+                    android:id="@+id/tbi1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Left"
-                    android:icon="@drawable/r11"/>
+                    android:icon="@drawable/r11"
+                    android:text="@string/main_summary_state" />
 
                 <android.support.design.widget.TabItem
+                    android:id="@+id/tbi2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Center"
-                    android:icon="@drawable/r22" />
+                    android:icon="@drawable/r22"
+                    android:text="@string/main_now_state" />
 
                 <android.support.design.widget.TabItem
+                    android:id="@+id/tbi3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Right"
-                    android:icon="@drawable/r33"/>
+                    android:icon="@drawable/r33"
+                    android:text="@string/main_define_person" />
             </android.support.design.widget.TabLayout>
 
-        </android.support.constraint.ConstraintLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
 
