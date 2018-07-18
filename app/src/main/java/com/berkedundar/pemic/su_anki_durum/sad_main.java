@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.berkedundar.pemic.backdata.JSONTask;
 import com.berkedundar.pemic.R;
+import com.berkedundar.pemic.backdata.ListAdapter;
+import com.berkedundar.pemic.backdata.SAD_Kisi;
 import com.berkedundar.pemic.backdata.Statics;
 
 import org.json.JSONArray;
@@ -39,18 +41,23 @@ public class sad_main extends Fragment {
             JSONObject jsonObject = new JSONObject(_logs);
 
             ListView lv=(ListView)_view.findViewById(R.id.log_list);
-            List<String> list = new ArrayList<String>();
+            List list = new ArrayList<>();
 
             JSONArray logs = jsonObject.getJSONArray("logs");
             for (int i=0; i<logs.length(); i++){
-                list.add(logs.getJSONObject(i).toString());
+                JSONObject _temp = logs.getJSONObject(i);
+                list.add(new SAD_Kisi(_temp.getString("mac")
+                        ,_temp.getString("action"), _temp.getString("time")));
+
+                //list.add(logs.getJSONObject(i).toString());
             }
 
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_list_item_1,
-                    list );
+            ListAdapter adapter = new ListAdapter(getContext(),list,"sad_kisi");
 
-            lv.setAdapter(arrayAdapter);
+            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+            //        android.R.layout.simple_list_item_1,list );
+
+            lv.setAdapter(adapter);
 
         } catch (Exception e) {
             new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show(); }
