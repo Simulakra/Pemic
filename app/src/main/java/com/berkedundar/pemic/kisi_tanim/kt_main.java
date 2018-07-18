@@ -1,4 +1,4 @@
-package com.berkedundar.pemic;
+package com.berkedundar.pemic.kisi_tanim;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.berkedundar.pemic.R;
 
 
 public class kt_main extends Fragment {

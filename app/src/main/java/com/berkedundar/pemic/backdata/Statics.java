@@ -1,4 +1,4 @@
-package com.berkedundar.pemic;
+package com.berkedundar.pemic.backdata;
 
 public class Statics {
     public static String BASE_URL = "192.168.1.23";
