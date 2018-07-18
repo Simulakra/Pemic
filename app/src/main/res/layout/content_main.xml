@@ -35,14 +35,6 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:text="Ofis #01" />
-
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_add_office"
                     android:layout_width="match_parent"

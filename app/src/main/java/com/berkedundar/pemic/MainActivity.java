@@ -1,18 +1,25 @@
 package com.berkedundar.pemic;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.VoiceInteractor;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.berkedundar.pemic.backdata.Statics;
 import com.berkedundar.pemic.kisi_tanim.kt_main;
@@ -35,16 +42,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
+        //Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
 
         Set<String> offices = preferences.getStringSet("offices",null);
-        if(offices==null)
+        /*if(offices==null)
         {
-            //todo ofis ekleme yeri
-            //startActivity(getParentActivityIntent());
-            //finish();
+            Intent intent = new Intent(MainActivity.this, ofisEdit.class);
+            startActivityForResult(intent, 13);
+        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        for (int i=0; i<offices.size(); i++){
+            String _temp = offices.toArray()[i].toString();
+            String[] _office = _temp.split("~");
+
+            Button bt=new Button(getApplicationContext());
+            bt.setText(_office[1]);
+            toolbar.addView(bt);
+        }*/
+        if(offices!=null){
+            Snackbar.make(getCurrentFocus(), offices.toArray()[0].toString(), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Button bt=new Button(getApplicationContext());
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                //Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
+
+                Set<String> offices = preferences.getStringSet("offices",null);
+                if(offices!=null){
+                    new AlertDialog.Builder(MainActivity.this).setMessage(offices.toArray()[0].toString())
+                            .setPositiveButton("Tamam",null).create().show();
+                }
+                else{
+                    new AlertDialog.Builder(MainActivity.this).setMessage("Office is null")
+                            .setPositiveButton("Tamam",null).create().show();
+                }
+            }
+        });
+        bt.setText("Ofis #01");
+        toolbar.addView(bt);
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
@@ -58,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo ofis ekleme yap
+                Intent intent = new Intent(MainActivity.this, ofisEdit.class);
+                startActivityForResult(intent, 13);
             }
         });
     }
@@ -98,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 13) { //ofisEdit gidişi
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
