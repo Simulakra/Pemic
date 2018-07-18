@@ -34,7 +34,6 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme">
-                <!--TODO scrollable toolbar-->
 
                 <Button
                     android:id="@+id/button"

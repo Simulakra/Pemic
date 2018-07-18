@@ -1,10 +1,12 @@
 package com.berkedundar.pemic.backdata;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.berkedundar.pemic.R;
@@ -60,7 +62,16 @@ public class ListAdapter extends BaseAdapter {
 
             // Öğelerimize verilerimizi yüklüyoruz.
             tv_mac.setText(sad_kisi.getMAC());
-            tv_desc.setText(sad_kisi.getTime());
+
+            String _desc = "Giriş : ";
+
+            if(sad_kisi.getAction().equals("1")){
+                _desc = "Çıkış : ";
+                ImageView iv=(ImageView)satirView.findViewById(R.id.iv_action);
+                iv.setImageResource(R.drawable.ww5);
+            }
+
+            tv_desc.setText(_desc + sad_kisi.getTime());
 
             // Mevcut satır için işlem tamam ve view return ediliyor.
             //return satirView;

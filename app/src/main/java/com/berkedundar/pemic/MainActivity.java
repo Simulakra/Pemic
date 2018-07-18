@@ -3,6 +3,7 @@ package com.berkedundar.pemic;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.berkedundar.pemic.backdata.Statics;
 import com.berkedundar.pemic.kisi_tanim.kt_main;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,14 +34,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Todo change here OR make something changeable
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Statics.BASE_URL=preferences.getString("baseID","192.168.1.23");
+        Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
+
+        Set<String> offices = preferences.getStringSet("offices",null);
+        if(offices==null)
+        {
+            //todo ofis ekleme yeri
+            //startActivity(getParentActivityIntent());
+            //finish();
+        }
+
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
+        FloatingButtonClickListenerCrete();
         SetTabActivities();
+    }
+
+    private void FloatingButtonClickListenerCrete() {
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab_add_office);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo ofis ekleme yap
+            }
+        });
     }
 
     private void SetTabActivities() {

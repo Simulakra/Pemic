@@ -7,4 +7,6 @@
     <string name="main_summary_state">Özet Durum</string>
     <string name="main_now_state">Şu Anki Durum</string>
     <string name="main_define_person">Kişi Tanımlama</string>
+    <string name="kt_persons">Kişilerim</string>
+    <string name="kt_new_person">Kişi Ekle</string>
 </resources>
