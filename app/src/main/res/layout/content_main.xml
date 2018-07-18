@@ -34,32 +34,29 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme">
+                <!--TODO scrollable toolbar-->
 
-                <TextView
-                    android:id="@+id/textView1"
+                <Button
+                    android:id="@+id/button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Toolbar Title"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:text="Ofis #01" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_add_office"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Toolbar Title"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_gravity="right"
+                    android:layout_marginRight="25px"
+                    android:clickable="true"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:srcCompat="@android:drawable/ic_menu_add" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Toolbar Title"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
 
             </android.support.v7.widget.Toolbar>
+
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"

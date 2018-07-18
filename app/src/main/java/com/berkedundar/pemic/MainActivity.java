@@ -28,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         // Add Fragments to adapter one by one
-        adapter.addFragment(new od_main(), "Özet");
-        adapter.addFragment(new sad_main(), "Şu An");
-        adapter.addFragment(new kt_main(), "Kişi");
+        adapter.addFragment(new od_main(), "Özet Durum");
+        adapter.addFragment(new sad_main(), "Şu Anki Durum");
+        adapter.addFragment(new kt_main(), "Kişi Tanımlama");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
