@@ -36,6 +36,7 @@ public class JSONTask extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params){
+
         String value="";
         try {
             URL url = new URL(params[0]);
