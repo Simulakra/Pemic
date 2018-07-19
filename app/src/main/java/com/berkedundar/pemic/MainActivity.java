@@ -1,10 +1,15 @@
 package com.berkedundar.pemic;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.VoiceInteractor;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -41,56 +46,66 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
+        SQLiteFirstActions();
+        FloatingButtonClickListenerCrete();
+        SetTabActivities();
+    }
 
-        Set<String> offices = preferences.getStringSet("offices",null);
-        /*if(offices==null)
-        {
+    private void SQLiteFirstActions() {
+        SQLiteDatabase db = openOrCreateDatabase("pemic",MODE_PRIVATE,null);
+        try{
+            Cursor cursor = db.query("offices",new String[]{"ID","Name","DB_IP","DB_Name","DB_User","DB_Pass"}
+            ,null,null,null,null,null);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+            int _count=0;
+            while(cursor.moveToNext()){
+                _count++;
+                final int _id = cursor.getInt(0);
+                final String _name=cursor.getString(1);
+                final String _db_ip=cursor.getString(2);
+                final String _db_name=cursor.getString(3);
+                final String _db_user=cursor.getString(4);
+                final String _db_pass=cursor.getString(5);
+
+                Button bt=new Button(getApplicationContext());
+                bt.setText(_name);
+                bt.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, ofisEdit.class);
+                        intent.putExtra("editMode",true);
+                        intent.putExtra("id",_id);
+                        intent.putExtra("name",_name);
+                        intent.putExtra("db_ip",_db_ip);
+                        intent.putExtra("db_name",_db_name);
+                        intent.putExtra("db_user",_db_user);
+                        intent.putExtra("db_pass",_db_pass);
+                        startActivityForResult(intent, 13);
+                        return false;
+                    }
+                });
+                bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //office connection yap
+                    }
+                });
+                toolbar.addView(bt);
+            }
+            if(cursor.getCount()==0){
+                Intent intent = new Intent(MainActivity.this, ofisEdit.class);
+                startActivityForResult(intent, 13);
+            }
+
+        }catch (Exception e){
+            db.execSQL("CREATE TABLE offices(" +
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "Name TEXT, DB_IP TEXT, DB_Name TEXT," +
+                    "DB_User TEXT, DB_Pass TEXT)");
             Intent intent = new Intent(MainActivity.this, ofisEdit.class);
             startActivityForResult(intent, 13);
         }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        for (int i=0; i<offices.size(); i++){
-            String _temp = offices.toArray()[i].toString();
-            String[] _office = _temp.split("~");
-
-            Button bt=new Button(getApplicationContext());
-            bt.setText(_office[1]);
-            toolbar.addView(bt);
-        }*/
-        if(offices!=null){
-            Snackbar.make(getCurrentFocus(), offices.toArray()[0].toString(), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Button bt=new Button(getApplicationContext());
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //Statics.BASE_URL = preferences.getString("baseID","192.168.1.23");
-
-                Set<String> offices = preferences.getStringSet("offices",null);
-                if(offices!=null){
-                    new AlertDialog.Builder(MainActivity.this).setMessage(offices.toArray()[0].toString())
-                            .setPositiveButton("Tamam",null).create().show();
-                }
-                else{
-                    new AlertDialog.Builder(MainActivity.this).setMessage("Office is null")
-                            .setPositiveButton("Tamam",null).create().show();
-                }
-            }
-        });
-        bt.setText("Ofis #01");
-        toolbar.addView(bt);
-
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-
-        FloatingButtonClickListenerCrete();
-        SetTabActivities();
     }
 
     private void FloatingButtonClickListenerCrete() {
@@ -145,9 +160,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 13) { //ofisEdit gidişi
+            RestartApp();
         }
     }
 
+    private void RestartApp(){
+        Intent mStartActivity = new Intent(MainActivity.this, MainActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(MainActivity.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
+    }
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
