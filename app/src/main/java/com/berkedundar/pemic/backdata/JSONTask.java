@@ -52,6 +52,13 @@ public class JSONTask extends AsyncTask<String, String, String> {
                 prms.add(new BasicNameValuePair(params[i], params[i + 1]));
             }
 
+            //Server Bilgileri Göndermek
+            prms.add(new BasicNameValuePair("DB_IP", Statics.ActiveIP));
+            prms.add(new BasicNameValuePair("DB_Name", Statics.ActiveDB));
+            prms.add(new BasicNameValuePair("DB_User", Statics.ActiveUser));
+            prms.add(new BasicNameValuePair("DB_Pass", Statics.ActivePass));
+
+
             OutputStream os = con.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));

@@ -2,8 +2,7 @@
     <string name="app_name">Pemic</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Seçili bir ofis bulunmamaktadır.\n\nTanımlı ofislerden birisini seçerek bağlantınızı kurunuz.</string>
     <string name="main_summary_state">Özet Durum</string>
     <string name="main_now_state">Şu Anki Durum</string>
     <string name="main_define_person">Kişi Tanımlama</string>

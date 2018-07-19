@@ -1,4 +1,4 @@
-package com.berkedundar.pemic.kisi_tanim;
+package com.berkedundar.pemic;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.berkedundar.pemic.R;
-import com.berkedundar.pemic.backdata.Statics;
 
-
-public class kt_main extends Fragment {
+public class notConnected extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,20 +17,11 @@ public class kt_main extends Fragment {
         if (getArguments() != null) {
         }
     }
-    View _view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(Statics.ActiveOffice!=-1){
-            _view = inflater.inflate(R.layout.fragment_kt_main, container, false);
-
-            return _view;
-        }
-        else{
-            _view = inflater.inflate(R.layout.fragment_not_connected, container, false);
-            return _view;
-        }
+        return inflater.inflate(R.layout.fragment_not_connected, container, false);
     }
-
 }

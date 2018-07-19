@@ -1,5 +1,6 @@
 package com.berkedundar.pemic;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         SetTabActivities();
     }
 
+    @SuppressLint("ResourceAsColor")
     private void SQLiteFirstActions() {
         SQLiteDatabase db = openOrCreateDatabase("pemic",MODE_PRIVATE,null);
         try{
@@ -70,17 +72,18 @@ public class MainActivity extends AppCompatActivity {
 
                 Button bt=new Button(getApplicationContext());
                 bt.setText(_name);
+                bt.setTextColor(R.color.colorWheat);
                 bt.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         Intent intent = new Intent(MainActivity.this, ofisEdit.class);
-                        intent.putExtra("editMode",true);
-                        intent.putExtra("id",_id);
-                        intent.putExtra("name",_name);
-                        intent.putExtra("db_ip",_db_ip);
-                        intent.putExtra("db_name",_db_name);
-                        intent.putExtra("db_user",_db_user);
-                        intent.putExtra("db_pass",_db_pass);
+                        intent.putExtra("editMode", true);
+                        intent.putExtra("id", _id);
+                        intent.putExtra("name", _name);
+                        intent.putExtra("db_ip", _db_ip);
+                        intent.putExtra("db_name", _db_name);
+                        intent.putExtra("db_user", _db_user);
+                        intent.putExtra("db_pass", _db_pass);
                         startActivityForResult(intent, 13);
                         return false;
                     }
@@ -89,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //office connection yap
+                        Statics.ActiveOffice = _id;
+                        Statics.ActiveIP = _db_ip;
+                        Statics.ActiveDB = _db_name;
+                        Statics.ActiveUser = _db_user;
+                        Statics.ActivePass = _db_pass;
+                        ((Button)v).setTextColor(R.color.colorAccent);
+                        SetTabActivities();
                     }
                 });
                 toolbar.addView(bt);

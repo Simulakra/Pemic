@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.berkedundar.pemic.R;
+import com.berkedundar.pemic.backdata.Statics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +42,14 @@ public class od_main extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        _view = inflater.inflate(R.layout.fragment_od_main, container, false);
+        if(Statics.ActiveOffice!=-1){
+            _view = inflater.inflate(R.layout.fragment_od_main, container, false);
 
-        return _view;
+            return _view;
+        }
+        else{
+            _view = inflater.inflate(R.layout.fragment_not_connected, container, false);
+            return _view;
+        }
     }
 }
