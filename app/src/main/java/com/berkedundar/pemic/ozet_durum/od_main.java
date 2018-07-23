@@ -44,7 +44,7 @@ public class od_main extends Fragment {
         // Inflate the layout for this fragment
         if(Statics.ActiveOffice!=-1){
             _view = inflater.inflate(R.layout.fragment_od_main, container, false);
-
+            _view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
             return _view;
         }
         else{

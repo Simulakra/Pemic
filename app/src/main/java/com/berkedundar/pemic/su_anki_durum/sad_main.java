@@ -36,7 +36,8 @@ public class sad_main extends Fragment {
         // Inflate the layout for this fragment
         if(Statics.ActiveOffice!=-1){
             _view = inflater.inflate(R.layout.fragment_sad_main, container, false);
-            FillListView();
+            if(!FillListView())
+                _view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
             return _view;
         }
         else{
@@ -45,7 +46,7 @@ public class sad_main extends Fragment {
         }
     }
 
-    private void FillListView() {
+    private boolean FillListView() {
         String _logs = "";
         try {
             _logs = new JSONTask().execute(Statics.SELECT_API).get();
@@ -69,9 +70,11 @@ public class sad_main extends Fragment {
             //        android.R.layout.simple_list_item_1,list );
 
             lv.setAdapter(adapter);
-
+            return true;
         } catch (Exception e) {
-            new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show(); }
+            return false;
+            //new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show();
+        }
     }
 
 }
