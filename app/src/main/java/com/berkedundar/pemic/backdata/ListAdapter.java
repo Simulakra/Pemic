@@ -1,7 +1,6 @@
 package com.berkedundar.pemic.backdata;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.berkedundar.pemic.R;
+import com.berkedundar.pemic.kisi_tanim.KT_Kisi;
+import com.berkedundar.pemic.su_anki_durum.SAD_Kisi;
 
 import java.util.List;
 
@@ -48,21 +49,14 @@ public class ListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
 
-        if (hangisi == "sad_kisi") {
-            // Burada inflate işlemi yapılıyor.
-            // Tasarımını yaptığımız layout dosyamızı view olarak alıyoruz
+        if (hangisi == "SAD_Kisi") {
             satirView = layoutInflater.inflate(R.layout.sad_kisi, null);
 
-            // Öğelerimizi satirView'dan çağırıyoruz.
             TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
             TextView tv_desc = (TextView) satirView.findViewById(R.id.tv_desc);
 
-            // Mevcut pozisyon için kisi nesnesi oluşturuluyor.
             SAD_Kisi sad_kisi = (SAD_Kisi) list.get(position);
-
-            // Öğelerimize verilerimizi yüklüyoruz.
             tv_mac.setText(sad_kisi.getMAC());
-
             String _desc = "Giriş : ";
 
             if(sad_kisi.getAction().equals("1")){
@@ -72,11 +66,17 @@ public class ListAdapter extends BaseAdapter {
             }
 
             tv_desc.setText(_desc + sad_kisi.getTime());
-
-            // Mevcut satır için işlem tamam ve view return ediliyor.
-            //return satirView;
         }
-        //else if ()
+        else if (hangisi == "KT_Kisi"){
+            satirView = layoutInflater.inflate(R.layout.kt_kisi, null);
+
+            TextView tv_nick = (TextView) satirView.findViewById(R.id.tv_nick);
+            TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
+
+            KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
+            tv_nick.setText(kt_kisi.getNickname());
+            tv_mac.setText(kt_kisi.getMAC());
+        }
         //else
         return satirView;
     }

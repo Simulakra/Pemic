@@ -1,18 +1,17 @@
 package com.berkedundar.pemic.su_anki_durum;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.berkedundar.pemic.backdata.JSONTask;
 import com.berkedundar.pemic.R;
 import com.berkedundar.pemic.backdata.ListAdapter;
-import com.berkedundar.pemic.backdata.SAD_Kisi;
 import com.berkedundar.pemic.backdata.Statics;
 
 import org.json.JSONArray;
@@ -36,8 +35,9 @@ public class sad_main extends Fragment {
         // Inflate the layout for this fragment
         if(Statics.ActiveOffice!=-1){
             _view = inflater.inflate(R.layout.fragment_sad_main, container, false);
-            if(!FillListView())
-                _view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
+            Log.d("test",String.valueOf(FillListView()));
+            //if(!FillListView())
+                //_view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
             return _view;
         }
         else{
@@ -49,27 +49,27 @@ public class sad_main extends Fragment {
     private boolean FillListView() {
         String _logs = "";
         try {
-            _logs = new JSONTask().execute(Statics.SELECT_API).get();
+            _logs = new JSONTask().execute(Statics.PULL_ALL_LOGS).get();
             JSONObject jsonObject = new JSONObject(_logs);
+            Log.d("data",jsonObject.toString());
+            if(jsonObject.getString("success").equals("1")) {
+                ListView lv = (ListView) _view.findViewById(R.id.log_list);
+                List list = new ArrayList<>();
 
-            ListView lv=(ListView)_view.findViewById(R.id.log_list);
-            List list = new ArrayList<>();
+                JSONArray logs = jsonObject.getJSONArray("logs");
+                for (int i = 0; i < logs.length(); i++) {
+                    JSONObject _temp = logs.getJSONObject(i);
+                    list.add(new SAD_Kisi(_temp.getString("id"), _temp.getString("mac")
+                            , _temp.getString("action"), _temp.getString("time")));
+                }
 
-            JSONArray logs = jsonObject.getJSONArray("logs");
-            for (int i=0; i<logs.length(); i++){
-                JSONObject _temp = logs.getJSONObject(i);
-                list.add(new SAD_Kisi(_temp.getString("mac")
-                        ,_temp.getString("action"), _temp.getString("time")));
+                ListAdapter adapter = new ListAdapter(getContext(), list, "SAD_Kisi");
 
-                //list.add(logs.getJSONObject(i).toString());
+                lv.setAdapter(adapter);
             }
-
-            ListAdapter adapter = new ListAdapter(getContext(),list,"sad_kisi");
-
-            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-            //        android.R.layout.simple_list_item_1,list );
-
-            lv.setAdapter(adapter);
+            else {
+                //tanımlı log yok falan
+            }
             return true;
         } catch (Exception e) {
             return false;

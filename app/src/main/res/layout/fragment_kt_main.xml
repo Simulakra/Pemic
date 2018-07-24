@@ -19,34 +19,32 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/aaa2" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:text="@string/kt_persons"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/ty_kt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/kt_new_person" />
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kt_persons" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kt_new_person" />
+
+            </android.support.design.widget.TabLayout>
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/aaa3" />
@@ -54,6 +52,7 @@
         </LinearLayout>
 
         <android.support.v4.view.ViewPager
+            android:id="@+id/vp_kt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />
