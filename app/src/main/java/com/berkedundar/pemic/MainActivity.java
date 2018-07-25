@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +40,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import static com.berkedundar.pemic.R.drawable.button_values;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Button bt=new Button(getApplicationContext());
                 bt.setText(_name);
-                bt.setTextColor(R.color.colorWheat);
+                bt.setBackground(getResources().getDrawable(R.drawable.button_values));
                 bt.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
