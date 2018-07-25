@@ -90,8 +90,8 @@ public class kt_kisiEkle extends Fragment {
                 Intent intent = new Intent(getActivity(), userEdit.class);
                 ListView listView = (ListView)_view.findViewById(R.id.non_user_list);
                 intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(position)).getNickname());
-                startActivity(intent);
-                ((MainActivity)getActivity()).SetTabActivities();
+                startActivityForResult(intent,25);
+                //((MainActivity)getActivity()).SetTabActivities();
             }
         });
     }

@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void SQLiteFirstActions() {
-        SQLiteDatabase db = openOrCreateDatabase("pemic",MODE_PRIVATE,null);
+        final SQLiteDatabase db = openOrCreateDatabase("pemic",MODE_PRIVATE,null);
         try{
             Cursor cursor = db.query("offices",new String[]{"ID","Name","DB_IP","DB_Name","DB_User","DB_Pass"}
             ,null,null,null,null,null);
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 bt.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, ofisEdit.class);
+                        /*Intent intent = new Intent(MainActivity.this, ofisEdit.class);
                         intent.putExtra("editMode", true);
                         intent.putExtra("id", _id);
                         intent.putExtra("name", _name);
@@ -84,7 +86,17 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("db_name", _db_name);
                         intent.putExtra("db_user", _db_user);
                         intent.putExtra("db_pass", _db_pass);
-                        startActivityForResult(intent, 13);
+                        startActivityForResult(intent, 13);*/
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage("Ofisi kaldırmak istediğinize emin misiniz?")
+                                .setPositiveButton("Kaldır", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        db.delete("offices","ID=?",new String[]{String.valueOf(_id)});
+                                        RestartApp();
+                                    }
+                                })
+                                .setNeutralButton("İptal",null).create().show();
                         return false;
                     }
                 });
@@ -143,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -171,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 13) { //ofisEdit gidişi
             RestartApp();
+        }
+        if (requestCode == 25) { //ofisEdit gidişi
+            SetTabActivities();
         }
     }
 

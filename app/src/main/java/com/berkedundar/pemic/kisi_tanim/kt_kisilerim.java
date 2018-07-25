@@ -99,8 +99,7 @@ public class kt_kisilerim extends Fragment {
                                 intent.putExtra("editMode",true);
                                 intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(_position)).getMAC());
                                 intent.putExtra("nick",((KT_Kisi)listView.getItemAtPosition(_position)).getNickname());
-                                startActivity(intent);
-                                ((MainActivity)getActivity()).SetTabActivities();
+                                startActivityForResult(intent,25);
                             }
                         })
                         .setNegativeButton("Sil", new DialogInterface.OnClickListener() {
