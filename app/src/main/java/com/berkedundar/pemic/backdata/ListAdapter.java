@@ -76,6 +76,23 @@ public class ListAdapter extends BaseAdapter {
             KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText(kt_kisi.getMAC());
+
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_person);
+            iv.setImageResource(R.drawable.qqq1);
+        }
+
+        else if (hangisi == "KT_Kisi_non"){
+            satirView = layoutInflater.inflate(R.layout.kt_kisi, null);
+
+            TextView tv_nick = (TextView) satirView.findViewById(R.id.tv_nick);
+            TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
+
+            KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
+            tv_nick.setText(kt_kisi.getNickname());
+            tv_mac.setText("Son Giriş: " + kt_kisi.getMAC());
+
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_person);
+            iv.setImageResource(R.drawable.qqq2);
         }
         //else
         return satirView;

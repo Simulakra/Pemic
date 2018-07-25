@@ -11,6 +11,7 @@ public class Statics {
     private static String MAIN_URL(){ return "http://"+ActiveIP+"/pemic-api"; }
     public static final String PULL_ALL_LOGS = MAIN_URL() + "/PullAllLogs.php";
     public static final String PULL_ALL_USERS = MAIN_URL() + "/PullAllUsers.php";
+    public static final String PULL_ALL_NON_USERS = MAIN_URL() + "/PullAllNonUsers.php";
 }
 
 /*

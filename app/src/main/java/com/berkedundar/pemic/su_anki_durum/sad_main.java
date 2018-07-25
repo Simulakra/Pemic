@@ -35,9 +35,8 @@ public class sad_main extends Fragment {
         // Inflate the layout for this fragment
         if(Statics.ActiveOffice!=-1){
             _view = inflater.inflate(R.layout.fragment_sad_main, container, false);
-            Log.d("test",String.valueOf(FillListView()));
-            //if(!FillListView())
-                //_view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
+            if(!FillListView())
+                _view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
             return _view;
         }
         else{
@@ -68,10 +67,11 @@ public class sad_main extends Fragment {
                 lv.setAdapter(adapter);
             }
             else {
-                //tanımlı log yok falan
+                //tanımlı log yok
             }
             return true;
         } catch (Exception e) {
+            Log.e("sad_main",e.toString());
             return false;
             //new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show();
         }

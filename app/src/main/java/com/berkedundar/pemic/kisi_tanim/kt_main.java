@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 
 public class kt_main extends Fragment {
 
@@ -47,8 +50,7 @@ public class kt_main extends Fragment {
         if(Statics.ActiveOffice!=-1){
             _view = inflater.inflate(R.layout.fragment_kt_main, container, false);
             SetTabActivities();
-            //if(!PullAllUserDatas())
-                //_view = inflater.inflate(R.layout.fragment_bad_connection, container, false);
+
             return _view;
         }
         else{
@@ -72,9 +74,6 @@ public class kt_main extends Fragment {
         List<String> list = new ArrayList<String>();
 
     }
-
-
-
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
