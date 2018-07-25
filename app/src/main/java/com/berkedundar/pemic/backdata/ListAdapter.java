@@ -77,7 +77,7 @@ public class ListAdapter extends BaseAdapter {
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText(kt_kisi.getMAC());
 
-            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_person);
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq1);
         }
 
@@ -91,7 +91,7 @@ public class ListAdapter extends BaseAdapter {
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText("Son Giriş: " + kt_kisi.getMAC());
 
-            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_person);
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq2);
         }
         //else
