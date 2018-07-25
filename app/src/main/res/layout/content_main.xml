@@ -19,6 +19,13 @@
             android:layout_weight="0.8"
             android:background="@color/colorPrimaryDark">
 
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                app:srcCompat="@drawable/pemic_logo" />
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
