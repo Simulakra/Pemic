@@ -45,8 +45,8 @@ public class JSONTask extends AsyncTask<String, String, String> {
         try {
             URL url = new URL(params[0]);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setReadTimeout(1000);
-            con.setConnectTimeout(1500);
+            con.setReadTimeout(10000);
+            con.setConnectTimeout(15000);
             con.setRequestMethod("POST");
             con.setDoInput(true);
             con.setDoOutput(true);
