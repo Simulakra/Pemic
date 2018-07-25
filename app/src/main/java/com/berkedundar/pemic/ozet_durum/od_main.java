@@ -58,24 +58,43 @@ public class od_main extends Fragment {
         }
     }
 
+    String TAG="od_main";
     private boolean FillListView() {
         String _logs = "";
         try {
-            _logs = new JSONTask().execute(Statics.PULL_USER_LOGS).get();
+            _logs = new JSONTask().execute(Statics.PULL_ONLINE_USERS).get();
             JSONObject jsonObject = new JSONObject(_logs);
-            Log.d("data",jsonObject.toString());
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.log_user_list);
                 List list = new ArrayList<>();
 
-                JSONArray logs = jsonObject.getJSONArray("logs");
-                for (int i = 0; i < logs.length(); i++) {
-                    JSONObject _temp = logs.getJSONObject(i);
-                    list.add(new SAD_Kisi(_temp.getString("id"), _temp.getString("nickname")
-                            , _temp.getString("action"), _temp.getString("time")));
+                JSONArray users = null;
+                try{
+                    users = new JSONObject(new JSONTask().execute(Statics.PULL_ALL_USERS).get()).getJSONArray("users");
+                } catch (Exception e){
+                    Log.e(TAG, "FillListView: " + e.toString() );
                 }
 
-                ListAdapter adapter = new ListAdapter(getContext(), list, "SAD_Kisi");
+                JSONArray logs = jsonObject.getJSONArray("users");
+                for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
+                    JSONObject _temp = logs.getJSONObject(i);
+
+                    String shown=_temp.getString("mac");
+                    if(users != null){
+                        for (int j=0;j<users.length();j++){
+                            JSONObject ttt = users.getJSONObject(j);
+                            if(ttt.getString("mac").equals(shown)){
+                                shown = ttt.getString("nickname");
+                                break;
+                            }
+                        }
+                    }
+
+
+                    list.add(new OD_Kisi(shown));
+                }
+
+                ListAdapter adapter = new ListAdapter(getContext(), list, "OD_Kisi");
 
                 lv.setAdapter(adapter);
             }
@@ -84,7 +103,7 @@ public class od_main extends Fragment {
             }
             return true;
         } catch (Exception e) {
-            Log.e("sad_main",e.toString());
+            Log.e("od_main",e.toString());
             return false;
             //new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show();
         }

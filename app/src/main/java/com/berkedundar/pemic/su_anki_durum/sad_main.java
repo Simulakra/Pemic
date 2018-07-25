@@ -44,21 +44,37 @@ public class sad_main extends Fragment {
             return _view;
         }
     }
-
+    String TAG = "sad_main";
     private boolean FillListView() {
         String _logs = "";
         try {
             _logs = new JSONTask().execute(Statics.PULL_ALL_LOGS).get();
             JSONObject jsonObject = new JSONObject(_logs);
-            Log.d("data",jsonObject.toString());
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.log_list);
                 List list = new ArrayList<>();
 
+                JSONArray users = null;
+                try{
+                    users = new JSONObject(new JSONTask().execute(Statics.PULL_ALL_USERS).get()).getJSONArray("users");
+                } catch (Exception e){
+                    Log.e(TAG, "FillListView: " + e.toString() );
+                }
+
                 JSONArray logs = jsonObject.getJSONArray("logs");
-                for (int i = 0; i < logs.length(); i++) {
+                for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
                     JSONObject _temp = logs.getJSONObject(i);
-                    list.add(new SAD_Kisi(_temp.getString("id"), _temp.getString("mac")
+                    String shown=_temp.getString("mac");
+                    if(users != null){
+                        for (int j=0;j<users.length();j++){
+                            JSONObject ttt = users.getJSONObject(j);
+                            if(ttt.getString("mac").equals(shown)){
+                                shown = ttt.getString("nickname");
+                                break;
+                            }
+                        }
+                    }
+                    list.add(new SAD_Kisi(_temp.getString("id"), shown
                             , _temp.getString("action"), _temp.getString("time")));
                 }
 

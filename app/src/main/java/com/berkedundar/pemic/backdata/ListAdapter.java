@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.berkedundar.pemic.R;
 import com.berkedundar.pemic.kisi_tanim.KT_Kisi;
+import com.berkedundar.pemic.ozet_durum.OD_Kisi;
 import com.berkedundar.pemic.su_anki_durum.SAD_Kisi;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class ListAdapter extends BaseAdapter {
             tv_mac.setText(sad_kisi.getMAC());
             String _desc = "Giriş : ";
 
-            if(sad_kisi.getAction().equals("1")){
+            if(sad_kisi.getAction().equals("0")){
                 _desc = "Çıkış : ";
                 ImageView iv=(ImageView)satirView.findViewById(R.id.iv_action);
                 iv.setImageResource(R.drawable.ww5);
@@ -93,6 +94,22 @@ public class ListAdapter extends BaseAdapter {
 
             ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq2);
+        }
+
+        else if (hangisi == "OD_Kisi"){
+            satirView = layoutInflater.inflate(R.layout.sad_kisi, null);
+
+
+            TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
+            TextView tv_desc = (TextView) satirView.findViewById(R.id.tv_desc);
+
+            tv_desc.setText("");
+
+            OD_Kisi od_kisi = (OD_Kisi) list.get(position);
+            tv_mac.setText(od_kisi.getMAC());
+
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_action);
+            iv.setImageResource(R.drawable.r33);
         }
         //else
         return satirView;

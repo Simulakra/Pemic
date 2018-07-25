@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.berkedundar.pemic.MainActivity;
 import com.berkedundar.pemic.userEdit;
 
 import com.berkedundar.pemic.R;
@@ -90,6 +91,7 @@ public class kt_kisiEkle extends Fragment {
                 ListView listView = (ListView)_view.findViewById(R.id.non_user_list);
                 intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(position)).getNickname());
                 startActivity(intent);
+                ((MainActivity)getActivity()).SetTabActivities();
             }
         });
     }

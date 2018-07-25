@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.berkedundar.pemic.MainActivity;
 import com.berkedundar.pemic.R;
 import com.berkedundar.pemic.backdata.JSONTask;
 import com.berkedundar.pemic.backdata.ListAdapter;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class kt_kisilerim extends Fragment {
@@ -81,7 +84,7 @@ public class kt_kisilerim extends Fragment {
             return false;
         }
     }
-
+    String TAG = "kt_kisilerim";
     private void KisiDuzenlemePaneli(ListView lv) {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,9 +100,23 @@ public class kt_kisilerim extends Fragment {
                                 intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(_position)).getMAC());
                                 intent.putExtra("nick",((KT_Kisi)listView.getItemAtPosition(_position)).getNickname());
                                 startActivity(intent);
+                                ((MainActivity)getActivity()).SetTabActivities();
                             }
                         })
-                        .setNegativeButton("Profil",null)
+                        .setNegativeButton("Sil", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ListView listView = (ListView)_view.findViewById(R.id.user_list);
+                                String _temp = ((KT_Kisi)listView.getItemAtPosition(_position)).getMAC();
+                                try {
+                                    Log.d(TAG, "onClick: "+_temp);
+                                    new JSONTask().execute(Statics.DELETE_ONE_USER,"MAC",_temp).get();
+                                } catch (Exception e){
+                                    Log.e(TAG, e.toString() );
+                                }
+                                ((MainActivity)getActivity()).SetTabActivities();
+                            }
+                        })
                         .setNeutralButton("İptal",null).create().show();
             }
         });
