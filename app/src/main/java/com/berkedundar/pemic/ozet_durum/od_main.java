@@ -62,7 +62,7 @@ public class od_main extends Fragment {
     private boolean FillListView() {
         String _logs = "";
         try {
-            _logs = new JSONTask().execute(Statics.PULL_ONLINE_USERS).get();
+            _logs = new JSONTask().execute(new Statics().PULL_ONLINE_USERS).get();
             JSONObject jsonObject = new JSONObject(_logs);
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.log_user_list);
@@ -70,7 +70,7 @@ public class od_main extends Fragment {
 
                 JSONArray users = null;
                 try{
-                    users = new JSONObject(new JSONTask().execute(Statics.PULL_ALL_USERS).get()).getJSONArray("users");
+                    users = new JSONObject(new JSONTask().execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
                 } catch (Exception e){
                     Log.e(TAG, "FillListView: " + e.toString() );
                 }

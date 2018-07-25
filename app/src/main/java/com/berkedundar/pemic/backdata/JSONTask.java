@@ -28,8 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.berkedundar.pemic.MainActivity;
 
 
 public class JSONTask extends AsyncTask<String, String, String> {
@@ -38,11 +41,12 @@ public class JSONTask extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params){
 
         String value="";
+        String TAG="JSONTask";
         try {
             URL url = new URL(params[0]);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setReadTimeout(10000);
-            con.setConnectTimeout(10000);
+            con.setReadTimeout(1000);
+            con.setConnectTimeout(1500);
             con.setRequestMethod("POST");
             con.setDoInput(true);
             con.setDoOutput(true);
@@ -51,6 +55,12 @@ public class JSONTask extends AsyncTask<String, String, String> {
             for (int i = 1; i < params.length - 1; i += 2) {
                 prms.add(new BasicNameValuePair(params[i], params[i + 1]));
             }
+
+            Log.d(TAG, "doInBackground: ActiveOffice: "+Statics.ActiveOffice);
+            Log.d(TAG, "doInBackground: ActiveIP: "+Statics.ActiveIP);
+            Log.d(TAG, "doInBackground: ActiveDB: "+Statics.ActiveDB);
+            Log.d(TAG, "doInBackground: ActiveUser: "+Statics.ActiveUser);
+            Log.d(TAG, "doInBackground: ActivePass: "+Statics.ActivePass);
 
             //Server Bilgileri Göndermek
             prms.add(new BasicNameValuePair("DB_IP", Statics.ActiveIP));
@@ -71,6 +81,7 @@ public class JSONTask extends AsyncTask<String, String, String> {
 
             BufferedReader bf = new BufferedReader(new InputStreamReader(con.getInputStream()));
             value = bf.readLine();
+            Log.d(TAG, "doInBackground: value: "+value);
 
         }catch (Exception ex){
             System.out.println(ex);

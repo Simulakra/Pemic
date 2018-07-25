@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    String TAG="MainActivity";
     public void SetTabActivities() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

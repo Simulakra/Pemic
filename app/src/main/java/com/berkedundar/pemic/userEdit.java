@@ -63,9 +63,9 @@ public class userEdit extends AppCompatActivity {
 
                 try {
                     if (userMAC.equals("")) {
-                        new JSONTask().execute(Statics.ADD_NEW_USER, "MAC", mac, "Nickname", temp).get();
+                        new JSONTask().execute(new Statics().ADD_NEW_USER, "MAC", mac, "Nickname", temp).get();
                     } else {
-                        new JSONTask().execute(Statics.EDIT_ONE_USER, "MAC", mac, "Nickname", temp, "old_mac", userMAC).get();
+                        new JSONTask().execute(new Statics().EDIT_ONE_USER, "MAC", mac, "Nickname", temp, "old_mac", userMAC).get();
                     }
                 }catch (Exception e) {
                     new AlertDialog.Builder(userEdit.this).setMessage(e.toString()).create().show();
