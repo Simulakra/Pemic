@@ -2,6 +2,7 @@ package com.berkedundar.pemic.kisi_tanim;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.berkedundar.pemic.userEdit;
 
 import com.berkedundar.pemic.R;
 import com.berkedundar.pemic.backdata.JSONTask;
@@ -63,6 +67,8 @@ public class kt_kisiEkle extends Fragment {
                 ListAdapter adapter = new ListAdapter(getContext(), list, "KT_Kisi_non");
 
                 lv.setAdapter(adapter);
+
+                KisiEklemePaneli(lv);
             }
             else{
                 //tanımsız kişi yok
@@ -74,6 +80,18 @@ public class kt_kisiEkle extends Fragment {
             new AlertDialog.Builder(getContext()).setMessage(e.toString()).create().show();
             return false;
         }
+    }
+
+    private void KisiEklemePaneli(ListView lv) {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), userEdit.class);
+                ListView listView = (ListView)_view.findViewById(R.id.non_user_list);
+                intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(position)).getNickname());
+                startActivity(intent);
+            }
+        });
     }
 
 }

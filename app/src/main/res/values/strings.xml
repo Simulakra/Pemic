@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pemic</string>
     <string name="action_settings">Settings</string>
+    <string name="welcome">Uygulamamıza Hoşgeldiniz</string>
 
     <string name="main_summary_state">Özet Durum</string>
     <string name="main_now_state">Şu Anki Durum</string>
@@ -11,6 +12,6 @@
     <string name="error_not_connected">Seçili bir ofis bulunmamaktadır.\n\nTanımlı ofislerden birisini seçerek bağlantınızı kurunuz.</string>
     <string name="error_bad_connection">Seçtiğiniz ofis bağlantısında sıkıntı yaşanmaktadır.\n\nSağlayıcınız ile iletişime geçiniz.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_user_edit">Kullanıcı Tanımlama</string>
 </resources>

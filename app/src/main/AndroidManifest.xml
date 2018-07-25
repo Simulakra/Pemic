@@ -24,6 +24,10 @@
         <activity
             android:name=".ofisEdit"
             android:label="@string/title_activity_ofis_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".userEdit"
+            android:label="@string/title_activity_user_edit"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
