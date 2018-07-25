@@ -89,7 +89,7 @@ public class ListAdapter extends BaseAdapter {
 
             KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
             tv_nick.setText(kt_kisi.getNickname());
-            tv_mac.setText("Son Giriş: " + kt_kisi.getMAC());
+            tv_mac.setText("Son Log: " + kt_kisi.getMAC());
 
             ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq2);

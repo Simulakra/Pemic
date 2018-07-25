@@ -2,18 +2,22 @@ package com.berkedundar.pemic.kisi_tanim;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.berkedundar.pemic.R;
 import com.berkedundar.pemic.backdata.JSONTask;
 import com.berkedundar.pemic.backdata.ListAdapter;
 import com.berkedundar.pemic.backdata.Statics;
+import com.berkedundar.pemic.userEdit;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,6 +67,8 @@ public class kt_kisilerim extends Fragment {
                 ListAdapter adapter = new ListAdapter(getContext(), list, "KT_Kisi");
 
                 lv.setAdapter(adapter);
+
+                KisiDuzenlemePaneli(lv);
             }
             else{
                 //tanımlı kişi yok
@@ -74,5 +80,28 @@ public class kt_kisilerim extends Fragment {
             new AlertDialog.Builder(getContext()).setMessage(e.toString()).create().show();
             return false;
         }
+    }
+
+    private void KisiDuzenlemePaneli(ListView lv) {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int _position = position;
+                new AlertDialog.Builder(getContext()).setMessage("Seçtiğiniz kullanıcı için yapacağınız işlem menüsünü seçin")
+                        .setPositiveButton("Düzenle", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), userEdit.class);
+                                ListView listView = (ListView)_view.findViewById(R.id.user_list);
+                                intent.putExtra("editMode",true);
+                                intent.putExtra("mac",((KT_Kisi)listView.getItemAtPosition(_position)).getMAC());
+                                intent.putExtra("nick",((KT_Kisi)listView.getItemAtPosition(_position)).getNickname());
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Profil",null)
+                        .setNeutralButton("İptal",null).create().show();
+            }
+        });
     }
 }
