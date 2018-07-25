@@ -8,6 +8,8 @@ tools:context=".ozet_durum.od_main">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="" />
+        android:gravity="center"
+        android:text="@string/welcome"
+        android:textSize="30sp" />
 
 </FrameLayout>
