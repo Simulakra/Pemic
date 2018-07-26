@@ -11,7 +11,7 @@ public class Statics {
     public static int ShowLogCount = 50;
 
     //public static String BASE_URL = "192.168.1.23";
-    private String MAIN_URL(){ return "http://"+ActiveIP+"/pemic-api"; }
+    private String MAIN_URL(){ return "http://"+ActiveIP+"/Pemic/pemic-api"; }
     public final String PULL_ALL_LOGS = MAIN_URL() + "/PullAllLogs.php";
     public final String PULL_ONLINE_USERS = MAIN_URL() + "/PullOnlineUsers.php";
     public final String PULL_USER_LOGS = MAIN_URL() + "/PullUserLogs.php";
