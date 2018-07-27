@@ -13,7 +13,7 @@ public class Statics {
     private String MAIN_URL(){ return "http://"+ActiveIP+"/Pemic/pemic-api"; }
     public final String PULL_ALL_LOGS = MAIN_URL() + "/PullAllLogs.php";
     public final String PULL_ONLINE_USERS = MAIN_URL() + "/PullOnlineUsers.php";
-    public final String PULL_USER_LOGS = MAIN_URL() + "/PullUserLogs.php";
+    public final String ONE_USER_LOGS = MAIN_URL() + "/OneUserLogs.php";
     public final String PULL_ALL_USERS = MAIN_URL() + "/PullAllUsers.php";
     public final String PULL_ALL_NON_USERS = MAIN_URL() + "/PullAllNonUsers.php";
     public final String ADD_NEW_USER = MAIN_URL() + "/AddNewUser.php";
