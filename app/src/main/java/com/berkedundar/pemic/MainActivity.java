@@ -1,22 +1,16 @@
 package com.berkedundar.pemic;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,7 +18,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +32,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import static com.berkedundar.pemic.R.drawable.button_values;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Button bt=new Button(getApplicationContext());
                 bt.setText(_name);
-                bt.setBackground(getResources().getDrawable(R.drawable.button_values));
+                bt.setBackground(getResources().getDrawable(R.drawable.button_default));
                 bt.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -117,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         Statics.ActiveDB = _db_name;
                         Statics.ActiveUser = _db_user;
                         Statics.ActivePass = _db_pass;
-                        ((Button)v).setTextColor(R.color.colorAccent);
+                        ((Button)v).setBackground(getResources().getDrawable(R.drawable.button_default));
                         SetTabActivities();
                     }
                 });
