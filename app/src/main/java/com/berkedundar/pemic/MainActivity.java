@@ -81,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
                 bt.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+                        String officeMessage="Ofis Adı: "+_name+"\n" +
+                                "Database ID: "+_db_ip+"\n" +
+                                "Database Adı: "+_db_name+"\n" +
+                                "Kullanıcı Adı: "+_db_user+"\n" +
+                                "Kullanıcı Şifresi: "+_db_pass+"\n\n";
                         /*Intent intent = new Intent(MainActivity.this, ofisEdit.class);
                         intent.putExtra("editMode", true);
                         intent.putExtra("id", _id);
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("db_pass", _db_pass);
                         startActivityForResult(intent, 13);*/
                         new AlertDialog.Builder(MainActivity.this)
-                                .setMessage("Ofisi kaldırmak istediğinize emin misiniz?")
+                                .setMessage(officeMessage+"Ofisi kaldırmak istediğinize emin misiniz?")
                                 .setPositiveButton("Kaldır", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

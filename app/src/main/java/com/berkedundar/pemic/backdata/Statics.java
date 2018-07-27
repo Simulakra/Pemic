@@ -6,7 +6,6 @@ public class Statics {
     public static String ActiveDB ="";
     public static String ActiveUser ="";
     public static String ActivePass ="";
-    //todo custom ofis çekme AYARLA!!!!
 
     public static int ShowLogCount = 50;
 
