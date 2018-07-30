@@ -113,6 +113,7 @@ public class ListAdapter extends BaseAdapter {
             String _nick=od_kisi.getNickname();
             if(_nick.isEmpty()){
                 tv_mac.setText(od_kisi.getMAC());
+                tv_desc.setText("");
             }
             else{
                 tv_mac.setText(od_kisi.getNickname());
