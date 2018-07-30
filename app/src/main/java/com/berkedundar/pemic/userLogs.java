@@ -46,17 +46,18 @@ public class userLogs extends AppCompatActivity {
                 JSONArray logs = jsonObject.getJSONArray("logs");
                 for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
                     JSONObject _temp = logs.getJSONObject(i);
+                    String shownNick="";
                     String shown=_temp.getString("mac");
                     if(users != null){
                         for (int j=0;j<users.length();j++){
                             JSONObject ttt = users.getJSONObject(j);
                             if(ttt.getString("mac").equals(shown)){
-                                shown = ttt.getString("nickname");
+                                shownNick = ttt.getString("nickname");
                                 break;
                             }
                         }
                     }
-                    list.add(new SAD_Kisi(_temp.getString("id"), shown
+                    list.add(new SAD_Kisi(_temp.getString("id"),_temp.getString("mac"), shownNick
                             , _temp.getString("action"), _temp.getString("time")));
                 }
 

@@ -1,16 +1,20 @@
 package com.berkedundar.pemic.su_anki_durum;
 
+import java.util.Set;
+
 public class SAD_Kisi {
     private String id;
     private String mac;
     private String action;
     private String time;
+    private String nickname;
 
 
     // Yapıcı metodumuzda bilgileri alıyoruz.
-    public SAD_Kisi(String id, String mac, String action, String time) {
+    public SAD_Kisi(String id, String mac, String nickname, String action, String time) {
         this.setID(id);
         this.setMAC(mac);
+        this.setNickname(nickname);
         this.setAction(action);
         this.setTime(time);
     }
@@ -47,5 +51,13 @@ public class SAD_Kisi {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

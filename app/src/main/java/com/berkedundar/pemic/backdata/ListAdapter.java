@@ -5,6 +5,7 @@ import com.berkedundar.pemic.userLogs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,15 @@ public class ListAdapter extends BaseAdapter {
             TextView tv_desc = (TextView) satirView.findViewById(R.id.tv_desc);
 
             SAD_Kisi sad_kisi = (SAD_Kisi) list.get(position);
-            tv_mac.setText(sad_kisi.getMAC());
+            String nick=sad_kisi.getNickname();
+            if(nick.isEmpty()){
+                tv_mac.setText("**Tanımsız MAC**\n"+sad_kisi.getMAC());
+                tv_mac.setTextSize(11);
+                tv_mac.setTextColor(Color.parseColor("#aaaaaa"));
+            }
+            else{
+                tv_mac.setText(sad_kisi.getNickname());
+            }
             String _desc = "Giriş : ";
 
             if(sad_kisi.getAction().equals("0")){
