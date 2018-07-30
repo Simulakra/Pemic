@@ -108,10 +108,16 @@ public class ListAdapter extends BaseAdapter {
             TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
             TextView tv_desc = (TextView) satirView.findViewById(R.id.tv_desc);
 
-            tv_desc.setText("");
 
             final OD_Kisi od_kisi = (OD_Kisi) list.get(position);
-            tv_mac.setText(od_kisi.getMAC());
+            String _nick=od_kisi.getNickname();
+            if(_nick.isEmpty()){
+                tv_mac.setText(od_kisi.getMAC());
+            }
+            else{
+                tv_mac.setText(od_kisi.getNickname());
+                tv_desc.setText(od_kisi.getMAC());
+            }
 
             ImageView iv=(ImageView)satirView.findViewById(R.id.iv_action);
             iv.setImageResource(R.drawable.r33);

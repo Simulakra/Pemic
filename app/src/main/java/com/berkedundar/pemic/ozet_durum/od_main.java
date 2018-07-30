@@ -79,19 +79,20 @@ public class od_main extends Fragment {
                 for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
                     JSONObject _temp = logs.getJSONObject(i);
 
+                    String nick="";
                     String shown=_temp.getString("mac");
+
                     if(users != null){
                         for (int j=0;j<users.length();j++){
                             JSONObject ttt = users.getJSONObject(j);
                             if(ttt.getString("mac").equals(shown)){
-                                shown = ttt.getString("nickname");
+                                nick = ttt.getString("nickname");
                                 break;
                             }
                         }
                     }
 
-
-                    list.add(new OD_Kisi(shown));
+                    list.add(new OD_Kisi(_temp.getString("mac"), nick));
                 }
 
                 ListAdapter adapter = new ListAdapter(getContext(), list, "OD_Kisi");
