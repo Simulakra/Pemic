@@ -48,7 +48,7 @@ public class sad_main extends Fragment {
     private boolean FillListView() {
         String _logs = "";
         try {
-            _logs = new JSONTask().execute(new Statics().PULL_ALL_LOGS).get();
+            _logs = new JSONTask(getContext()).execute(new Statics().PULL_ALL_LOGS).get();
             JSONObject jsonObject = new JSONObject(_logs);
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.log_list);
@@ -56,7 +56,7 @@ public class sad_main extends Fragment {
 
                 JSONArray users = null;
                 try{
-                    users = new JSONObject(new JSONTask().execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
+                    users = new JSONObject(new JSONTask(null).execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
                 } catch (Exception e){
                     Log.e(TAG, "FillListView: " + e.toString() );
                 }

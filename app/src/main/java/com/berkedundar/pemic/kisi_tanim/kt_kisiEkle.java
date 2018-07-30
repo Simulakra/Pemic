@@ -52,7 +52,7 @@ public class kt_kisiEkle extends Fragment {
 
     private boolean PullAllNonUsers() {
         try {
-            String data = new JSONTask().execute(new Statics().PULL_ALL_NON_USERS).get();
+            String data = new JSONTask(getContext()).execute(new Statics().PULL_ALL_NON_USERS).get();
             JSONObject users = new JSONObject(data);
             if(users.getString("success").equals("1")){
                 ListView lv = (ListView) _view.findViewById(R.id.non_user_list);

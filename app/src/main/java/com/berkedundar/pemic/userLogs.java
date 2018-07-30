@@ -30,7 +30,7 @@ public class userLogs extends AppCompatActivity {
         String mac = getIntent().getStringExtra("mac");
         String _logs = "", TAG="userLogs";
         try {
-            _logs = new JSONTask().execute(new Statics().ONE_USER_LOGS, "MAC", mac).get();
+            _logs = new JSONTask(userLogs.this).execute(new Statics().ONE_USER_LOGS, "MAC", mac).get();
             JSONObject jsonObject = new JSONObject(_logs);
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) findViewById(R.id.user_logs);
@@ -38,7 +38,7 @@ public class userLogs extends AppCompatActivity {
 
                 JSONArray users = null;
                 try{
-                    users = new JSONObject(new JSONTask().execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
+                    users = new JSONObject(new JSONTask(userLogs.this).execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
                 } catch (Exception e){
                     Log.e(TAG, "FillListView: " + e.toString() );
                 }
