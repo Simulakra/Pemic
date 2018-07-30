@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,11 +23,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.berkedundar.pemic.backdata.Statics;
 import com.berkedundar.pemic.kisi_tanim.kt_main;
 import com.berkedundar.pemic.ozet_durum.od_main;
 import com.berkedundar.pemic.su_anki_durum.sad_main;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
@@ -45,6 +48,23 @@ public class MainActivity extends AppCompatActivity {
         SQLiteFirstActions();
         FloatingButtonClickListenerCrete();
         SetTabActivities();
+        StartLoadingImage();
+        HideLoadingImage();
+        //ShowLoadingImage();
+    }
+
+    public void HideLoadingImage() {
+        ((ImageView)findViewById(R.id.iv_load)).setVisibility(View.INVISIBLE);
+    }
+
+    public void ShowLoadingImage() {
+        ((ImageView)findViewById(R.id.iv_load)).setVisibility(View.VISIBLE);
+    }
+
+    private void StartLoadingImage() {
+        Glide.with(MainActivity.this)
+                .load(R.drawable.wifi_load)
+                .into((ImageView)findViewById(R.id.iv_load));
     }
 
     @SuppressLint("ResourceAsColor")

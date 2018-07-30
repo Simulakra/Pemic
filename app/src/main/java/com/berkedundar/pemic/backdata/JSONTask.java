@@ -39,9 +39,12 @@ import com.berkedundar.pemic.MainActivity;
 
 public class JSONTask extends AsyncTask<String, String, String> {
 
-    AlertDialog.Builder dialog;
+    Context _context;
     public JSONTask(Context context){
         if (context != null) {
+            _context = context;
+            ((MainActivity)_context).ShowLoadingImage();
+
             //dialog = new AlertDialog.Builder(context).setMessage("Server bağlantısı kuruluyor.\nLütfen bekleyiniz...");
             //dialog.create().show();
         }
@@ -96,6 +99,8 @@ public class JSONTask extends AsyncTask<String, String, String> {
         }catch (Exception ex){
             System.out.println(ex);
         }
+        if(_context!=null)
+            ((MainActivity)_context).HideLoadingImage();
         return value;
     }
 
