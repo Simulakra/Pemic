@@ -42,17 +42,15 @@ public class JSONTask extends AsyncTask<String, String, String> {
     Context _context;
     public JSONTask(Context context){
         if (context != null) {
+            try {
             _context = context;
             ((MainActivity)_context).ShowLoadingImage();
-
-            //dialog = new AlertDialog.Builder(context).setMessage("Server bağlantısı kuruluyor.\nLütfen bekleyiniz...");
-            //dialog.create().show();
+            } catch (Exception e){}
         }
     }
 
     @Override
     protected String doInBackground(String... params){
-
         String value="";
         String TAG="JSONTask";
         try {
@@ -99,8 +97,10 @@ public class JSONTask extends AsyncTask<String, String, String> {
         }catch (Exception ex){
             System.out.println(ex);
         }
-        if(_context!=null)
-            ((MainActivity)_context).HideLoadingImage();
+        try{
+            if(_context!=null)
+                ((MainActivity)_context).HideLoadingImage();
+        }catch (Exception e){}
         return value;
     }
 
