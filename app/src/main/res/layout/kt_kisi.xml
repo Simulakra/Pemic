@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
+    <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/od_swipe_kt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <!-- Bottom View Start-->
+    <LinearLayout
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorWheat"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        tools:layout_editor_absoluteX="384dp">
+
+        <ImageView
+            android:id="@+id/iv_settings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/qqq7" />
+    </LinearLayout>
+    <!-- Bottom View End-->
+
+    <!-- Surface View Start -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="#ffffff">
 
@@ -23,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -43,4 +70,7 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
+
+        <!-- Surface View End -->
+    </com.daimajia.swipe.SwipeLayout>
 </android.support.constraint.ConstraintLayout>

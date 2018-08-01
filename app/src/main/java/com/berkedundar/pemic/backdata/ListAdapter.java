@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import com.berkedundar.pemic.userLogs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -88,12 +89,61 @@ public class ListAdapter extends BaseAdapter {
             TextView tv_nick = (TextView) satirView.findViewById(R.id.tv_nick);
             TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
 
-            KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
+            final KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText(kt_kisi.getMAC());
 
             ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq1);
+
+            SwipeLayout swipeLayout =  (SwipeLayout)satirView.findViewById(R.id.od_swipe_kt);
+
+            //set show mode.
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+
+            //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
+            //swipeLayout.addDrag(SwipeLayout.DragEdge.Top, satirView.findViewById(R.id.bottom_wrapper));
+
+            swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onClose(SwipeLayout layout) {
+                    //when the SurfaceView totally cover the BottomView.
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                    //you are swiping.
+                }
+
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+                    //when the BottomView totally show.
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                    //when user's hand released.
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_settings);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,userLogs.class);
+                    intent.putExtra("mac",kt_kisi.getMAC());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         else if (hangisi == "KT_Kisi_non"){
@@ -102,12 +152,70 @@ public class ListAdapter extends BaseAdapter {
             TextView tv_nick = (TextView) satirView.findViewById(R.id.tv_nick);
             TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
 
-            KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
+            final KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText("Son Log: " + kt_kisi.getMAC());
 
             ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
             iv.setImageResource(R.drawable.qqq2);
+
+            SwipeLayout swipeLayout =  (SwipeLayout)satirView.findViewById(R.id.od_swipe_kt);
+
+            //set show mode.
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+
+            //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
+            //swipeLayout.addDrag(SwipeLayout.DragEdge.Top, satirView.findViewById(R.id.bottom_wrapper));
+
+            swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onClose(SwipeLayout layout) {
+                    //when the SurfaceView totally cover the BottomView.
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                    //you are swiping.
+                }
+
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+                    //when the BottomView totally show.
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                    //when user's hand released.
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_settings);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(context).setMessage("İşlem seçiminiz:")
+                            .setPositiveButton("Loglar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(context,userLogs.class);
+                                    intent.putExtra("mac",kt_kisi.getNickname());
+                                    context.startActivity(intent);
+                                }
+                            }).setNegativeButton("MAC'i Yoksay",null)  //todo yoksayma işlemi yap
+                            .setNeutralButton("İptal",null).create().show();
+                    //todo buraya fazladan button koy
+                    //kisiyi ekle, kisi loglari, yoksay, falan filan
+                }
+            });
         }
 
         else if (hangisi == "OD_Kisi"){
