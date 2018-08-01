@@ -1,6 +1,8 @@
 package com.berkedundar.pemic.backdata;
 
 import android.app.AlertDialog;
+
+import com.berkedundar.pemic.userEdit;
 import com.berkedundar.pemic.userLogs;
 
 import android.content.Context;
@@ -8,10 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.berkedundar.pemic.R;
@@ -103,6 +107,8 @@ public class ListAdapter extends BaseAdapter {
 
             //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
             //swipeLayout.addDrag(SwipeLayout.DragEdge.Top, satirView.findViewById(R.id.bottom_wrapper));
+            swipeLayout.setRightSwipeEnabled(false);
+            swipeLayout.addDrag(SwipeLayout.DragEdge.Left, satirView.findViewById(R.id.bottom_wrapper));
 
             swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
                 @Override
@@ -202,8 +208,22 @@ public class ListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context,userLogs.class);
                     intent.putExtra("mac",kt_kisi.getNickname());
                     context.startActivity(intent);
-                    //todo buraya fazladan button koy
-                    //kisiyi ekle, kisi loglari, yoksay, falan filan
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_addnew);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, userEdit.class);
+                    intent.putExtra("mac",kt_kisi.getNickname());
+                    context.startActivity(intent);
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_settings);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //todo kişi yoksay
                 }
             });
         }
@@ -237,7 +257,8 @@ public class ListAdapter extends BaseAdapter {
             swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
 
             //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
-            //swipeLayout.addDrag(SwipeLayout.DragEdge.Left, satirView.findViewById(R.id.bottom_wrapper));
+            swipeLayout.setRightSwipeEnabled(false);
+            swipeLayout.addDrag(SwipeLayout.DragEdge.Left, satirView.findViewById(R.id.bottom_wrapper));
 
             swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
                 @Override
