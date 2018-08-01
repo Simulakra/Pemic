@@ -157,6 +157,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 13);
             }
         });
+        FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.fab_reflesh);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SetTabActivities();
+            }
+        });
     }
 
     String TAG="MainActivity";

@@ -43,17 +43,27 @@
                 android:theme="?attr/actionBarTheme">
 
                 <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_reflesh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15px"
+                    android:clickable="true"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    app:srcCompat="@android:drawable/ic_menu_rotate" />
+
+                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_add_office"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="25px"
+                    android:layout_marginRight="15px"
                     android:clickable="true"
                     app:backgroundTint="@color/colorPrimaryDark"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
-
             </android.support.v7.widget.Toolbar>
+
 
 
             <android.support.design.widget.TabLayout
