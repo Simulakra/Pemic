@@ -147,7 +147,7 @@ public class ListAdapter extends BaseAdapter {
         }
 
         else if (hangisi == "KT_Kisi_non"){
-            satirView = layoutInflater.inflate(R.layout.kt_kisi, null);
+            satirView = layoutInflater.inflate(R.layout.kt_kisiekle, null);
 
             TextView tv_nick = (TextView) satirView.findViewById(R.id.tv_nick);
             TextView tv_mac = (TextView) satirView.findViewById(R.id.tv_mac);
@@ -155,9 +155,6 @@ public class ListAdapter extends BaseAdapter {
             final KT_Kisi kt_kisi = (KT_Kisi) list.get(position);
             tv_nick.setText(kt_kisi.getNickname());
             tv_mac.setText("Son Log: " + kt_kisi.getMAC());
-
-            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_people);
-            iv.setImageResource(R.drawable.qqq2);
 
             SwipeLayout swipeLayout =  (SwipeLayout)satirView.findViewById(R.id.od_swipe_kt);
 
@@ -198,20 +195,13 @@ public class ListAdapter extends BaseAdapter {
                     //when user's hand released.
                 }
             });
-            iv=(ImageView)satirView.findViewById(R.id.iv_settings);
+            ImageView iv=(ImageView)satirView.findViewById(R.id.iv_logs);
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AlertDialog.Builder(context).setMessage("İşlem seçiminiz:")
-                            .setPositiveButton("Loglar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(context,userLogs.class);
-                                    intent.putExtra("mac",kt_kisi.getNickname());
-                                    context.startActivity(intent);
-                                }
-                            }).setNegativeButton("MAC'i Yoksay",null)  //todo yoksayma işlemi yap
-                            .setNeutralButton("İptal",null).create().show();
+                    Intent intent = new Intent(context,userLogs.class);
+                    intent.putExtra("mac",kt_kisi.getNickname());
+                    context.startActivity(intent);
                     //todo buraya fazladan button koy
                     //kisiyi ekle, kisi loglari, yoksay, falan filan
                 }
