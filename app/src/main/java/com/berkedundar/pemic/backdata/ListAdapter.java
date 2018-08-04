@@ -2,12 +2,15 @@ package com.berkedundar.pemic.backdata;
 
 import android.app.AlertDialog;
 
+import com.berkedundar.pemic.MainActivity;
 import com.berkedundar.pemic.userEdit;
 import com.berkedundar.pemic.userLogs;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +28,8 @@ import com.berkedundar.pemic.su_anki_durum.SAD_Kisi;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ListAdapter extends BaseAdapter {
 
@@ -223,7 +228,19 @@ public class ListAdapter extends BaseAdapter {
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //todo kişi yoksay
+                    new AlertDialog.Builder(context)
+                            .setMessage("Bu MAC adresini kişi ekle menüsünde bir daha görmemek istiyorsunuz.\n" +
+                                    "Bu adım geri alınamaz!\nEmin misiniz?")
+                            .setPositiveButton("MAC Adresini Yoksay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    SQLiteDatabase db= context.openOrCreateDatabase("pemic",MODE_PRIVATE,null);
+                                    ContentValues values=new ContentValues();
+                                    values.put("MAC",kt_kisi.getNickname());
+                                    db.insert("SilentMacs",null,values);
+                                    ((MainActivity)context).SetTabActivities();
+                                }
+                            }).setNeutralButton("İptal",null).create().show();
                 }
             });
         }
