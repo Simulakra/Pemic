@@ -146,13 +146,42 @@ public class ListAdapter extends BaseAdapter {
                     //when user's hand released.
                 }
             });
-            iv=(ImageView)satirView.findViewById(R.id.iv_settings);
+            iv=(ImageView)satirView.findViewById(R.id.iv_logs);
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,userLogs.class);
                     intent.putExtra("mac",kt_kisi.getMAC());
                     context.startActivity(intent);
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_edit);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, userEdit.class);
+                    intent.putExtra("editMode",true);
+                    intent.putExtra("mac",kt_kisi.getMAC());
+                    intent.putExtra("nick",kt_kisi.getNickname());
+                    context.startActivity(intent);
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_delete);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(context).setMessage(kt_kisi.getNickname() +
+                            " isimli kullanıcıyı silmek istediğinizden emin misiniz?")
+                            .setNeutralButton("İptal",null)
+                            .setPositiveButton("Sil", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        new JSONTask(context).execute(new Statics().DELETE_ONE_USER,"MAC",kt_kisi.getMAC()).get();
+                                    } catch (Exception e){ }
+                                    ((MainActivity)context).SetTabActivities();
+                                }
+                            }).create().show();
                 }
             });
         }
