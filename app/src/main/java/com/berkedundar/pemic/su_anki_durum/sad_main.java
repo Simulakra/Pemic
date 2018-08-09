@@ -1,5 +1,6 @@
 package com.berkedundar.pemic.su_anki_durum;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,14 +21,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class sad_main extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+        TryToCreateSilentMacTable();
     }
+    SQLiteDatabase db;
+    private void TryToCreateSilentMacTable() {
+        try{
+            db= getContext().openOrCreateDatabase("pemic",MODE_PRIVATE,null);
+            db.execSQL("CREATE TABLE SilentMacs(MAC TEXT PRIMARY KEY)");
+        }catch (Exception e){}
+    }
+
     View _view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,19 +74,23 @@ public class sad_main extends Fragment {
                 JSONArray logs = jsonObject.getJSONArray("logs");
                 for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
                     JSONObject _temp = logs.getJSONObject(i);
-                    String shownNick="";
-                    String shown=_temp.getString("mac");
-                    if(users != null){
-                        for (int j=0;j<users.length();j++){
-                            JSONObject ttt = users.getJSONObject(j);
-                            if(ttt.getString("mac").equals(shown)){
-                                shownNick = ttt.getString("nickname");
-                                break;
+                    String shownNick = "";
+                    String shown = _temp.getString("mac");
+                    if (db.query("SilentMacs", new String[]{"MAC"},
+                            "MAC=?", new String[]{shown}, null, null, null)
+                            .getCount() == 0) {
+                        if (users != null) {
+                            for (int j = 0; j < users.length(); j++) {
+                                JSONObject ttt = users.getJSONObject(j);
+                                if (ttt.getString("mac").equals(shown)) {
+                                    shownNick = ttt.getString("nickname");
+                                    break;
+                                }
                             }
                         }
+                        list.add(new SAD_Kisi(_temp.getString("id"), _temp.getString("mac"),
+                                shownNick, _temp.getString("action"), _temp.getString("time")));
                     }
-                    list.add(new SAD_Kisi(_temp.getString("id"), _temp.getString("mac"),
-                            shownNick , _temp.getString("action"), _temp.getString("time")));
                 }
 
                 ListAdapter adapter = new ListAdapter(getContext(), list, "SAD_Kisi");
