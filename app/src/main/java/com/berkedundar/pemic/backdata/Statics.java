@@ -19,6 +19,7 @@ public class Statics {
     public final String ADD_NEW_USER = MAIN_URL() + "/AddNewUser.php";
     public final String EDIT_ONE_USER = MAIN_URL() + "/EditOneUser.php";
     public final String DELETE_ONE_USER = MAIN_URL() + "/DeleteOneUser.php";
+    public final String GET_DEVICE = MAIN_URL() + "/GetDevice.php";
 }
 
 /*

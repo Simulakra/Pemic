@@ -28,6 +28,7 @@ import com.berkedundar.pemic.su_anki_durum.SAD_Kisi;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -251,6 +252,18 @@ public class ListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, userEdit.class);
                     intent.putExtra("mac",kt_kisi.getNickname());
                     context.startActivity(intent);
+                }
+            });
+            iv=(ImageView)satirView.findViewById(R.id.iv_search);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        new AlertDialog.Builder(context)
+                                .setMessage(new JSONTask(context).execute(new Statics()
+                                .GET_DEVICE, "MAC",kt_kisi.getNickname().substring(0,8)).get())
+                                .create().show();
+                    } catch (Exception e){}
                 }
             });
             iv=(ImageView)satirView.findViewById(R.id.iv_settings);
