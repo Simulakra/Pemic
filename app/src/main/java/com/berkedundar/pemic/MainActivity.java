@@ -51,6 +51,25 @@ public class MainActivity extends AppCompatActivity {
         StartLoadingImage();
         HideLoadingImage();
         //ShowLoadingImage();
+        CGNInfoImage();
+    }
+
+    private void CGNInfoImage() {
+        ImageView iv=(ImageView)findViewById(R.id.iv_cgn);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message="Bu uygulama CGN Yazılım & Bilişim Hizmetleri ürünüdür.\n\n" +
+                        "Android Codder: Berke DÜNDAR\n" +
+                        "Backend API Codder: Berke DÜNDAR\n" +
+                        "Logchecker Codder: Ali Cem KARIŞ\n" +
+                        "Proje Yöneticisi: Çağan Selçuk YÜCEL\n\n" +
+                        "www.cgnyazilim.com";
+                new AlertDialog.Builder(MainActivity.this)
+                        .setMessage(message)
+                        .create().show();
+            }
+        });
     }
 
     public void HideLoadingImage() {
