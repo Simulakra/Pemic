@@ -346,6 +346,16 @@ public class ListAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
+
+            iv=(ImageView)satirView.findViewById(R.id.iv_worktime);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,userLogs.class);
+                    intent.putExtra("mac",od_kisi.getMAC());
+                    context.startActivity(intent);
+                }
+            });
         }
         //else
         return satirView;

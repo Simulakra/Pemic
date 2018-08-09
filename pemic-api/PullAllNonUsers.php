@@ -12,7 +12,7 @@ $db = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE) or die(mysqli
 $result = mysqli_query($db, "SELECT logs.MAC, MAX(logs.Time) as 'Time' FROM logs
 								WHERE NOT(logs.MAC in (SELECT MAC FROM users))
 							    GROUP BY logs.MAC
-							    ORDER BY logs.Time ASC") or die(mysqli_error());
+							    ORDER BY MAX(logs.Time) DESC") or die(mysqli_error());
 
 if (mysqli_num_rows($result) > 0) {
 
