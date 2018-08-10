@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         "Android Codder: Berke DÜNDAR\n" +
                         "Backend API Codder: Berke DÜNDAR\n" +
                         "Logchecker Codder: Ali Cem KARIŞ\n" +
-                        "Proje Yöneticisi: Çağan Selçuk YÜCEL\n\n" +
+                        "Proje Yöneticisi: Çağan S. YÜCEL\n\n" +
                         "www.cgnyazilim.com";
                 new AlertDialog.Builder(MainActivity.this)
                         .setMessage(message)
@@ -189,8 +190,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    Boolean systemtabwork=false;
     String TAG="MainActivity";
     public void SetTabActivities() {
+        systemtabwork=true;
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -202,6 +205,38 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        final SharedPreferences sha = MainActivity.this.getSharedPreferences("pemic",MODE_PRIVATE);
+        int pos = sha.getInt("office",-1);
+        Log.d(TAG, "SetTabActivities: "+pos);
+        if(pos!=-1)
+        {
+            TabLayout.Tab tab = tabLayout.getTabAt(pos);
+            tab.select();
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (!systemtabwork) {
+                    SharedPreferences.Editor editor = sha.edit();
+                    editor.putInt("office", tab.getPosition());
+                    Log.d(TAG, "onTabSelected: " + tab.getPosition());
+                    editor.commit();
+                    int pos = sha.getInt("office", -1);
+                    Log.d(TAG, "editor.commit: " + pos);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        systemtabwork=false;
     }
 
     @Override
