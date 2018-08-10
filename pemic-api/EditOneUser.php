@@ -13,13 +13,14 @@ if (isset($_POST['old_mac'])){
         $db = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE) or die(mysqli_error());
 
         $nickname=$_POST['Nickname'];
+        $old_mac=$_POST['old_mac'];
 
         $result = mysqli_query($db, "UPDATE users SET Nickname='$nickname' 
             WHERE MAC='$old_mac'") or die(mysqli_error());
 
         if ($result) {
             $response["success"] = 1;
-            $response["message"] = "User successfully created.";
+            $response["message"] = "User successfully edited.";
      
             echo json_encode($response);
         } else {
