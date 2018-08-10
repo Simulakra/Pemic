@@ -5,4 +5,5 @@
     <color name="colorPrimaryLight">#bdd4de</color>
     <color name="colorAccent">#FF530D</color>
     <color name="colorWheat">#efefef</color>
+    <color name="none">#00000000</color>
 </resources>

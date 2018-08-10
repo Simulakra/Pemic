@@ -3,6 +3,7 @@ package com.berkedundar.pemic.kisi_tanim;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class kt_kisiEkle extends Fragment {
     private View _view;
@@ -35,8 +38,14 @@ public class kt_kisiEkle extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+        TryToCreateSilentMacTable();
+    }
+    SQLiteDatabase db;
+    private void TryToCreateSilentMacTable() {
+        try{
+            db= getContext().openOrCreateDatabase("pemic",MODE_PRIVATE,null);
+            db.execSQL("CREATE TABLE SilentMacs(MAC TEXT PRIMARY KEY)");
+        }catch (Exception e){}
     }
 
     @Override
@@ -52,15 +61,21 @@ public class kt_kisiEkle extends Fragment {
 
     private boolean PullAllNonUsers() {
         try {
-            String data = new JSONTask().execute(new Statics().PULL_ALL_NON_USERS).get();
+            String data = new JSONTask(getContext()).execute(new Statics().PULL_ALL_NON_USERS).get();
             JSONObject users = new JSONObject(data);
             if(users.getString("success").equals("1")){
                 ListView lv = (ListView) _view.findViewById(R.id.non_user_list);
                 List list = new ArrayList<>();
+                List silent=new ArrayList<>();
                 JSONArray logs = users.getJSONArray("macs");
+
                 for (int i = 0; i < logs.length(); i++) {
                     JSONObject _temp = logs.getJSONObject(i);
-                    list.add(new KT_Kisi(_temp.getString("last"), _temp.getString("mac")));
+                    String mac=_temp.getString("mac");
+                    if(db.query("SilentMacs",new String[]{"MAC"},
+                            "MAC=?",new String[]{mac},null,null,null)
+                            .getCount()==0)
+                        list.add(new KT_Kisi(_temp.getString("last"), mac ));
                 }
 
                 //list.add(new KT_Kisi("12:23:34:45:56:67","Patates"));

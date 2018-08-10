@@ -1,22 +1,18 @@
 package com.berkedundar.pemic;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,20 +24,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.berkedundar.pemic.backdata.Statics;
 import com.berkedundar.pemic.kisi_tanim.kt_main;
 import com.berkedundar.pemic.ozet_durum.od_main;
 import com.berkedundar.pemic.su_anki_durum.sad_main;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import static com.berkedundar.pemic.R.drawable.button_values;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +53,42 @@ public class MainActivity extends AppCompatActivity {
         SQLiteFirstActions();
         FloatingButtonClickListenerCrete();
         SetTabActivities();
+        StartLoadingImage();
+        HideLoadingImage();
+        //ShowLoadingImage();
+        CGNInfoImage();
+    }
+
+    private void CGNInfoImage() {
+        ImageView iv=(ImageView)findViewById(R.id.iv_cgn);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message="Bu uygulama CGN Yazılım & Bilişim Hizmetleri ürünüdür.\n\n" +
+                        "Android Codder: Berke DÜNDAR\n" +
+                        "Backend API Codder: Berke DÜNDAR\n" +
+                        "Logchecker Codder: Ali Cem KARIŞ\n" +
+                        "Proje Yöneticisi: Çağan S. YÜCEL\n\n" +
+                        "www.cgnyazilim.com";
+                new AlertDialog.Builder(MainActivity.this)
+                        .setMessage(message)
+                        .create().show();
+            }
+        });
+    }
+
+    public void HideLoadingImage() {
+        ((ImageView)findViewById(R.id.iv_load)).setVisibility(View.INVISIBLE);
+    }
+
+    public void ShowLoadingImage() {
+        ((ImageView)findViewById(R.id.iv_load)).setVisibility(View.VISIBLE);
+    }
+
+    private void StartLoadingImage() {
+        Glide.with(MainActivity.this)
+                .load(R.drawable.wifi_load)
+                .into((ImageView)findViewById(R.id.iv_load));
     }
 
     @SuppressLint("ResourceAsColor")
@@ -65,9 +99,12 @@ public class MainActivity extends AppCompatActivity {
             ,null,null,null,null,null);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-            int _count=0;
+
+            // you need to have a list of data that you want the spinner to display
+            List<String> spinnerArray =  new ArrayList<String>();
+
+            boolean first=true;
             while(cursor.moveToNext()){
-                _count++;
                 final int _id = cursor.getInt(0);
                 final String _name=cursor.getString(1);
                 final String _db_ip=cursor.getString(2);
@@ -75,55 +112,57 @@ public class MainActivity extends AppCompatActivity {
                 final String _db_user=cursor.getString(4);
                 final String _db_pass=cursor.getString(5);
 
-                Button bt=new Button(getApplicationContext());
-                bt.setText(_name);
-                bt.setBackground(getResources().getDrawable(R.drawable.button_values));
-                bt.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        /*Intent intent = new Intent(MainActivity.this, ofisEdit.class);
-                        intent.putExtra("editMode", true);
-                        intent.putExtra("id", _id);
-                        intent.putExtra("name", _name);
-                        intent.putExtra("db_ip", _db_ip);
-                        intent.putExtra("db_name", _db_name);
-                        intent.putExtra("db_user", _db_user);
-                        intent.putExtra("db_pass", _db_pass);
-                        startActivityForResult(intent, 13);*/
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setMessage("Ofisi kaldırmak istediğinize emin misiniz?")
-                                .setPositiveButton("Kaldır", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        db.delete("offices","ID=?",new String[]{String.valueOf(_id)});
-                                        RestartApp();
-                                    }
-                                })
-                                .setNeutralButton("İptal",null).create().show();
-                        return false;
-                    }
-                });
-                bt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //office connection yap
-                        Statics.ActiveOffice = _id;
-                        Statics.ActiveIP = _db_ip;
-                        Statics.ActiveDB = _db_name;
-                        Statics.ActiveUser = _db_user;
-                        Statics.ActivePass = _db_pass;
-                        ((Button)v).setTextColor(R.color.colorAccent);
-                        SetTabActivities();
-                    }
-                });
-                toolbar.addView(bt);
+                spinnerArray.add(_name);
+
+                if(first) {
+                    Statics.ActiveOffice = _id;
+                    Statics.ActiveIP = _db_ip;
+                    Statics.ActiveDB = _db_name;
+                    Statics.ActiveUser = _db_user;
+                    Statics.ActivePass = _db_pass;
+                }
+
             }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, spinnerArray);
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            final Spinner sItems = (Spinner) findViewById(R.id.spn_offices);
+            sItems.setAdapter(adapter);
+
+            sItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    String officename = sItems.getItemAtPosition(position).toString();
+                    Cursor cursor = db.query("offices",new String[]{"ID","DB_IP","DB_Name","DB_User","DB_Pass"}
+                            ,"Name=?",new String[]{officename},null,null,null);
+                    cursor.moveToNext();
+                    Statics.ActiveOffice = cursor.getInt(0);
+                    Statics.ActiveIP=cursor.getString(1);
+                    Statics.ActiveDB=cursor.getString(2);
+                    Statics.ActiveUser=cursor.getString(3);
+                    Statics.ActivePass=cursor.getString(4);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    Statics.ActiveOffice = -1;
+                    Statics.ActiveIP="";
+                    Statics.ActiveDB="";
+                    Statics.ActiveUser="";
+                    Statics.ActivePass="";
+                }
+
+            });
+
             if(cursor.getCount()==0){
                 Intent intent = new Intent(MainActivity.this, ofisEdit.class);
                 startActivityForResult(intent, 13);
             }
 
         }catch (Exception e){
+            Log.e(TAG, "SQLiteFirstActions: "+e.toString() );
             db.execSQL("CREATE TABLE offices(" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "Name TEXT, DB_IP TEXT, DB_Name TEXT," +
@@ -142,10 +181,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 13);
             }
         });
+        FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.fab_reflesh);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SetTabActivities();
+            }
+        });
     }
 
+    Boolean systemtabwork=false;
     String TAG="MainActivity";
     public void SetTabActivities() {
+        systemtabwork=true;
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -157,6 +205,38 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        final SharedPreferences sha = MainActivity.this.getSharedPreferences("pemic",MODE_PRIVATE);
+        int pos = sha.getInt("office",-1);
+        Log.d(TAG, "SetTabActivities: "+pos);
+        if(pos!=-1)
+        {
+            TabLayout.Tab tab = tabLayout.getTabAt(pos);
+            tab.select();
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (!systemtabwork) {
+                    SharedPreferences.Editor editor = sha.edit();
+                    editor.putInt("office", tab.getPosition());
+                    Log.d(TAG, "onTabSelected: " + tab.getPosition());
+                    editor.commit();
+                    int pos = sha.getInt("office", -1);
+                    Log.d(TAG, "editor.commit: " + pos);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        systemtabwork=false;
     }
 
     @Override

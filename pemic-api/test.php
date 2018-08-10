@@ -7,8 +7,7 @@ require_once __DIR__ . '/old/db-config.php';
 
 $db = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE) or die(mysqli_error());
 
-$result = mysqli_query($db, "SELECT logs.ID, users.Nickname, logs.Action, logs.Time 
-    FROM logs INNER JOIN users on logs.MAC = users.MAC ORDER BY Time DESC") or die(mysqli_error());
+$result = mysqli_query($db, "SELECT * FROM logs ORDER BY Time DESC") or die(mysqli_error());
 
 if (mysqli_num_rows($result) > 0) {
 
@@ -18,7 +17,7 @@ if (mysqli_num_rows($result) > 0) {
 
         $log = array();
         $log["id"] = $row["ID"];
-        $log["nickname"] = $row["Nickname"];
+        $log["mac"] = $row["MAC"];
         $log["action"] = $row["Action"];
         $log["time"] = $row["Time"];
  

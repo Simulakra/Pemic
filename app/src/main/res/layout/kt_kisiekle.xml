@@ -22,6 +22,15 @@
         tools:layout_editor_absoluteX="384dp">
 
         <ImageView
+            android:id="@+id/iv_settings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@drawable/qqq9" />
+
+        <ImageView
             android:id="@+id/iv_logs"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -31,22 +40,22 @@
             app:srcCompat="@drawable/r22" />
 
         <ImageView
-            android:id="@+id/iv_edit"
+            android:id="@+id/iv_search"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:padding="5dp"
-            app:srcCompat="@drawable/qqq1" />
+            app:srcCompat="@drawable/aaa1" />
 
         <ImageView
-            android:id="@+id/iv_delete"
+            android:id="@+id/iv_addnew"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:padding="5dp"
-            app:srcCompat="@drawable/qqq9" />
+            app:srcCompat="@drawable/qqq2" />
     </LinearLayout>
     <!-- Bottom View End-->
 
@@ -56,15 +65,6 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="#ffffff">
-
-        <ImageView
-            android:id="@+id/iv_people"
-            android:layout_width="90dp"
-            android:layout_height="100dp"
-            android:layout_gravity="left|center"
-            android:layout_weight="0.1"
-            android:padding="10dp"
-            app:srcCompat="@drawable/r33" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15px"
+                android:gravity="center"
                 android:text="TextView"
                 android:textSize="30sp" />
 
@@ -85,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15px"
+                android:gravity="center"
                 android:text="TextView"
                 android:textSize="14sp" />
         </LinearLayout>

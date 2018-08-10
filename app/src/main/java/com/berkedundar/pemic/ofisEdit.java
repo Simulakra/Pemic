@@ -70,6 +70,7 @@ public class ofisEdit extends AppCompatActivity {
                     return;
                 }
                 values.put("Name",temp);
+                String officename=temp;
 
                 temp = ((EditText)findViewById(R.id.et_db_ip)).getText().toString();
                 if(temp.isEmpty()) {
@@ -98,7 +99,15 @@ public class ofisEdit extends AppCompatActivity {
                 temp = ((EditText)findViewById(R.id.et_db_pass)).getText().toString();
                 values.put("DB_Pass",temp);
 
-                if(officeID==-1) db.insert("offices",null,values);
+                if(officeID==-1) {
+                    if(db.query("offices",new String[]{"Count(*)"},"Name=?",new String[]{officename},null,null,null).getCount()==0)
+                    {
+                        Snackbar.make(view, "Aynı isimde başka bir ofis tanımlamışsınız.\nFarklı bir isim giriniz.", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        return;
+                    }
+                    else db.insert("offices", null, values);
+                }
                 else db.update("offices",values,"ID=?",new String[]{( String.valueOf(officeID))});
 
                 new AlertDialog.Builder(ofisEdit.this).setMessage("Ofis kaydınız tamamlandı")

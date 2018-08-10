@@ -28,7 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,9 +39,18 @@ import com.berkedundar.pemic.MainActivity;
 
 public class JSONTask extends AsyncTask<String, String, String> {
 
+    Context _context;
+    public JSONTask(Context context){
+        if (context != null) {
+            try {
+            _context = context;
+            ((MainActivity)_context).ShowLoadingImage();
+            } catch (Exception e){}
+        }
+    }
+
     @Override
     protected String doInBackground(String... params){
-
         String value="";
         String TAG="JSONTask";
         try {
@@ -86,6 +97,10 @@ public class JSONTask extends AsyncTask<String, String, String> {
         }catch (Exception ex){
             System.out.println(ex);
         }
+        try{
+            if(_context!=null)
+                ((MainActivity)_context).HideLoadingImage();
+        }catch (Exception e){}
         return value;
     }
 

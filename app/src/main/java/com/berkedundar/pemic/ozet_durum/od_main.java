@@ -19,6 +19,7 @@ import com.berkedundar.pemic.backdata.JSONTask;
 import com.berkedundar.pemic.backdata.ListAdapter;
 import com.berkedundar.pemic.backdata.Statics;
 import com.berkedundar.pemic.su_anki_durum.SAD_Kisi;
+import com.daimajia.swipe.SwipeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,6 @@ public class od_main extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) { }
-
     }
 
     @Override
@@ -62,7 +62,7 @@ public class od_main extends Fragment {
     private boolean FillListView() {
         String _logs = "";
         try {
-            _logs = new JSONTask().execute(new Statics().PULL_ONLINE_USERS).get();
+            _logs = new JSONTask(getContext()).execute(new Statics().PULL_ONLINE_USERS).get();
             JSONObject jsonObject = new JSONObject(_logs);
             if(jsonObject.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.log_user_list);
@@ -70,7 +70,7 @@ public class od_main extends Fragment {
 
                 JSONArray users = null;
                 try{
-                    users = new JSONObject(new JSONTask().execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
+                    users = new JSONObject(new JSONTask(null).execute(new Statics().PULL_ALL_USERS).get()).getJSONArray("users");
                 } catch (Exception e){
                     Log.e(TAG, "FillListView: " + e.toString() );
                 }
@@ -79,23 +79,23 @@ public class od_main extends Fragment {
                 for (int i = 0; i < logs.length() && i < Statics.ShowLogCount; i++) {
                     JSONObject _temp = logs.getJSONObject(i);
 
+                    String nick="";
                     String shown=_temp.getString("mac");
+
                     if(users != null){
                         for (int j=0;j<users.length();j++){
                             JSONObject ttt = users.getJSONObject(j);
                             if(ttt.getString("mac").equals(shown)){
-                                shown = ttt.getString("nickname");
+                                nick = ttt.getString("nickname");
                                 break;
                             }
                         }
                     }
 
-
-                    list.add(new OD_Kisi(shown));
+                    list.add(new OD_Kisi(_temp.getString("mac"), nick));
                 }
 
                 ListAdapter adapter = new ListAdapter(getContext(), list, "OD_Kisi");
-
                 lv.setAdapter(adapter);
             }
             else {
@@ -108,4 +108,6 @@ public class od_main extends Fragment {
             //new AlertDialog.Builder(getContext()).setMessage("Veri Bağlantısı Yapılamadı\n"+e.toString()).create().show();
         }
     }
+
+
 }

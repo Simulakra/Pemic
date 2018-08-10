@@ -53,7 +53,7 @@ public class kt_kisilerim extends Fragment {
     private boolean PullAllUserDatas() {
 
         try {
-            String data = new JSONTask().execute(new Statics().PULL_ALL_USERS).get();
+            String data = new JSONTask(getContext()).execute(new Statics().PULL_ALL_USERS).get();
             users = new JSONObject(data);
             if(users.getString("success").equals("1")) {
                 ListView lv = (ListView) _view.findViewById(R.id.user_list);
@@ -110,7 +110,7 @@ public class kt_kisilerim extends Fragment {
                                 String _temp = ((KT_Kisi)listView.getItemAtPosition(_position)).getMAC();
                                 try {
                                     Log.d(TAG, "onClick: "+_temp);
-                                    new JSONTask().execute(new Statics().DELETE_ONE_USER,"MAC",_temp).get();
+                                    new JSONTask(getContext()).execute(new Statics().DELETE_ONE_USER,"MAC",_temp).get();
                                 } catch (Exception e){
                                     Log.e(TAG, e.toString() );
                                 }
