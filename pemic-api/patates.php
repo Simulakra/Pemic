@@ -1,8 +1,23 @@
 <?php 
+	
+	function nextDay()
+	{
+
+		$conn=mysqli_connect("localhost","alicem","123456","pemic");
+		$sql="SELECT EXTRACT(DAY FROM Time) FROM logs ORDER BY `logs`.`Time` DESC";
+		$res=mysqli_query($conn,$sql);
+		$lastlogday = mysqli_fetch_array($res);
+		if (date('d')!=$lastlogday[0]) {
+			$sql2="DELETE FROM onlineusers";
+			mysqli_query($conn,$sql2);
+			mysqli_close($conn);
+		}
+		
+	}
+	nextDay();
 	$fp = fopen('php://input', 'r');
 	$recentListj = stream_get_contents($fp);
 	$recentList = json_decode($recentListj);
-	var_dump($recentList);
 	$conn=mysqli_connect("localhost","pemic","lnS74w9?","pemic");
 	function status()
     {
@@ -20,6 +35,7 @@
 	    		return true;
 	    	}
     	}
+    	mysqli_close($conn);
     }
     
 	$oldlistquery="SELECT * FROM onlineusers";
@@ -77,4 +93,5 @@
     		mysqli_query($conn,$sql2);
     	}
     }
+    mysqli_close($conn);
 ?>
