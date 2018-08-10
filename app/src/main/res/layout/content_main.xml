@@ -45,7 +45,8 @@
                 <Spinner
                     android:id="@+id/spn_offices"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@color/colorWheat" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_reflesh"
