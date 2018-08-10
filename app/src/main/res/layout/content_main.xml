@@ -42,6 +42,11 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme">
 
+                <Spinner
+                    android:id="@+id/spn_offices"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content" />
+
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_reflesh"
                     android:layout_width="match_parent"
@@ -63,8 +68,6 @@
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
             </android.support.v7.widget.Toolbar>
-
-
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
