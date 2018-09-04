@@ -260,7 +260,7 @@ public class ListAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     try {
                         new AlertDialog.Builder(context)
-                                .setMessage(new JSONTask(context).execute(new Statics()
+                                .setMessage("Cihaz Tahmini:\n"+new JSONTask(context).execute(new Statics()
                                 .GET_DEVICE, "MAC",kt_kisi.getNickname().substring(0,8)).get())
                                 .create().show();
                     } catch (Exception e){}
@@ -364,9 +364,14 @@ public class ListAdapter extends BaseAdapter {
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,userLogs.class);
-                    intent.putExtra("mac",od_kisi.getMAC());
-                    context.startActivity(intent);
+                    new AlertDialog.Builder(context)
+                            .setMessage("Bu panelde kullanıcının günlük/haftalık çalışma saatleri hesaplanacaktır.\n" +
+                                    "Şimdilik bu panel deaktiftir.\n" +
+                                    "Anlayışınızdan dolayı teşekkür ederiz.\n\n" +
+                                    "CGN").create().show();
+                    //Intent intent = new Intent(context,userLogs.class);
+                    //intent.putExtra("mac",od_kisi.getMAC());
+                    //context.startActivity(intent);
                 }
             });
         }
